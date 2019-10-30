@@ -1,3 +1,5 @@
+library(dplyr)
+
 
 # Load the data for all players performance statistics
 
@@ -63,8 +65,11 @@ lost_players <- lost_players[,c('playerID', 'H', 'X2B','X3B','HR','OBP','SLG','B
 lost_players
 
 
+# Use 3 constraints to find replacement for 3 lost kep players
 
-
+# The total combined salary of the three players can not exceed 15 million dollars.
+# Their combined number of At Bats (AB) needs to be equal to or greater than the lost players.
+# Their mean OBP had to equal to or greater than the mean OBP of the lost players
 
 
 
