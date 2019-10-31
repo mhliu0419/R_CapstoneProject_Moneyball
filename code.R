@@ -1,4 +1,5 @@
 library(dplyr)
+library(ggplot2)
 
 
 # Load the data for all players performance statistics
@@ -22,7 +23,7 @@ batting$BA <- batting$H / batting$AB
 tail(batting$BA,5)
 
 
-batting$OBP <- (batting$H + batting$BB + batting$HBP)/(batting$AB + batting$BB + batting$BB + batting$HBP)
+batting$OBP <- (batting$H + batting$BB + batting$HBP)/(batting$AB + batting$BB + batting$HBP + batting$SF)
 
 batting$X1B <- batting$H - batting$X2B - batting$X3B - batting$HR
 
@@ -72,4 +73,14 @@ lost_players
 # Their mean OBP had to equal to or greater than the mean OBP of the lost players
 
 
+combo_2001 <- subset(combo, yearID == 2001)
 
+ggplot(combo_2001, aes(x=OBP, y=salary)) + geom_point(size=2)
+
+
+combo_2001_revised <- subset(combo_2001, salary < 8000000 & OBP > 0 & AB > 450)
+
+ggplot(combo_2001_revised, aes(x=OBP, y=salary)) + geom_point(size=2)
+
+combo_2001_revised_sorted <- arrange(combo_2001_revised, desc(OBP))
+combo_2001_revised_sorted[,c('playerID', 'AB','salary','OBP')]
