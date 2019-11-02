@@ -89,6 +89,13 @@ combo_2001_revised_sorted[,c('playerID', 'AB','salary','OBP')]
 # In a new method, I am gonna use three for loops to dynamically select three players one by one from 643 candidates
 
 
+# The way to change matrix to data.frame
+# m <- data.frame(matrix(0, ncol = 30, nrow = 2))
+# m <- as.data.frame(matrix(0, ncol = 30, nrow = 2))
+
+
+
+
 combo_2001_short <- combo_2001[,c('playerID', 'salary', 'AB', 'OBP')]
 combo_2001_short <- subset(combo_2001_short, OBP > 0)
 num_players <- dim(combo_2001_short)[1]
