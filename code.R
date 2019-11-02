@@ -84,3 +84,29 @@ ggplot(combo_2001_revised, aes(x=OBP, y=salary)) + geom_point(size=2)
 
 combo_2001_revised_sorted <- arrange(combo_2001_revised, desc(OBP))
 combo_2001_revised_sorted[,c('playerID', 'AB','salary','OBP')]
+
+#############
+# In a new method, I am gonna use three for loops to dynamically select three players one by one from 643 candidates
+
+
+combo_2001_short <- combo_2001[,c('playerID', 'salary', 'AB', 'OBP')]
+combo_2001_short <- subset(combo_2001_short, OBP > 0)
+num_players <- dim(combo_2001_short)[1]
+
+combined_salary = 0
+combined_AB = 0
+combine_OBP = 0
+
+desired_salary = 15000000
+desired_totalAB = sum(lost_players$AB)
+desired_totalOBP = sum(lost_players$OBP)
+
+for (i in num_players - 2){
+  
+  
+  
+  
+  
+  
+}
+
