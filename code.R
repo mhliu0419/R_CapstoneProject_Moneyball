@@ -113,7 +113,16 @@ for (i in num_players - 2){
   
   
   
-  
-  
+  for (j in num_players - 1){
+    
+    
+    
+    
+    
+    for (k in num_players){
+      
+      
+    }
+  }
 }
 
