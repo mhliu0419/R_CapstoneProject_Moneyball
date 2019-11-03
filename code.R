@@ -89,39 +89,57 @@ combo_2001_revised_sorted[,c('playerID', 'AB','salary','OBP')]
 # In a new method, I am gonna use three for loops to dynamically select three players one by one from 643 candidates
 
 
-# The way to change matrix to data.frame
-# m <- data.frame(matrix(0, ncol = 30, nrow = 2))
-# m <- as.data.frame(matrix(0, ncol = 30, nrow = 2))
-
-
-
-
 combo_2001_short <- combo_2001[,c('playerID', 'salary', 'AB', 'OBP')]
 combo_2001_short <- subset(combo_2001_short, OBP > 0)
-num_players <- dim(combo_2001_short)[1]
+#num_players <- dim(combo_2001_short)[1]
+num_players = 300
 
 combined_salary = 0
 combined_AB = 0
-combine_OBP = 0
+combined_OBP = 0
 
 desired_salary = 15000000
 desired_totalAB = sum(lost_players$AB)
 desired_totalOBP = sum(lost_players$OBP)
 
-for (i in num_players - 2){
+for (i in 1 : (num_players - 2)) {
+  i = 1
+  combined_salary = combined_salary + combo_2001_short[i,]$salary
+  combined_AB = combined_AB + combo_2001_short[i,]$AB
+  combined_OBP = combined_OBP + combo_2001_short[i,]$OBP
   
   
-  
-  
-  for (j in num_players - 1){
+  for (j in (i + 1) : (num_players - 1)) {
+    
+    combined_salary = combined_salary + combo_2001_short[j,]$salary
+    combined_AB = combined_AB + combo_2001_short[j,]$AB
+    combined_OBP = combined_OBP + combo_2001_short[j,]$OBP
     
     
-    
-    
-    
-    for (k in num_players){
+    for (k in (j + 1) : num_players) {
+
+      i = 4
+      combined_salary = combined_salary + combo_2001_short[i,]$salary
+      combined_AB = combined_AB + combo_2001_short[i,]$AB
+      combined_OBP = combined_OBP + combo_2001_short[i,]$OBP
       
+      j = 12
+      combined_salary = combined_salary + combo_2001_short[j,]$salary
+      combined_AB = combined_AB + combo_2001_short[j,]$AB
+      combined_OBP = combined_OBP + combo_2001_short[j,]$OBP
       
+      combined_salary = combined_salary + combo_2001_short[k,]$salary
+      combined_AB = combined_AB + combo_2001_short[k,]$AB
+      combined_OBP = combined_OBP + combo_2001_short[k,]$OBP
+      
+      if ((combined_salary <= desired_salary) & (combined_OBP >= desired_totalOBP) & (combined_AB >= desired_totalAB)) {
+        print(combo_2001_short[c(i,j,k),])
+      }
+      
+      combined_salary = 0
+      combined_AB = 0
+      combined_OBP = 0
+
     }
   }
 }
