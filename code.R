@@ -103,7 +103,8 @@ desired_totalAB = sum(lost_players$AB)
 desired_totalOBP = sum(lost_players$OBP)
 
 for (i in 1 : (num_players - 2)) {
-  i = 1
+
+  
   combined_salary = combined_salary + combo_2001_short[i,]$salary
   combined_AB = combined_AB + combo_2001_short[i,]$AB
   combined_OBP = combined_OBP + combo_2001_short[i,]$OBP
@@ -118,16 +119,7 @@ for (i in 1 : (num_players - 2)) {
     
     for (k in (j + 1) : num_players) {
 
-      i = 4
-      combined_salary = combined_salary + combo_2001_short[i,]$salary
-      combined_AB = combined_AB + combo_2001_short[i,]$AB
-      combined_OBP = combined_OBP + combo_2001_short[i,]$OBP
-      
-      j = 12
-      combined_salary = combined_salary + combo_2001_short[j,]$salary
-      combined_AB = combined_AB + combo_2001_short[j,]$AB
-      combined_OBP = combined_OBP + combo_2001_short[j,]$OBP
-      
+
       combined_salary = combined_salary + combo_2001_short[k,]$salary
       combined_AB = combined_AB + combo_2001_short[k,]$AB
       combined_OBP = combined_OBP + combo_2001_short[k,]$OBP
