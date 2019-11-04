@@ -92,7 +92,7 @@ combo_2001_revised_sorted[,c('playerID', 'AB','salary','OBP')]
 combo_2001_short <- combo_2001[,c('playerID', 'salary', 'AB', 'OBP')]
 combo_2001_short <- subset(combo_2001_short, OBP > 0)
 #num_players <- dim(combo_2001_short)[1]
-num_players = 300
+num_players <- 11
 
 combined_salary = 0
 combined_AB = 0
@@ -104,10 +104,10 @@ desired_totalOBP = sum(lost_players$OBP)
 
 for (i in 1 : (num_players - 2)) {
 
-  
   combined_salary = combined_salary + combo_2001_short[i,]$salary
   combined_AB = combined_AB + combo_2001_short[i,]$AB
   combined_OBP = combined_OBP + combo_2001_short[i,]$OBP
+
   
   
   for (j in (i + 1) : (num_players - 1)) {
@@ -119,12 +119,11 @@ for (i in 1 : (num_players - 2)) {
     
     for (k in (j + 1) : num_players) {
 
-
       combined_salary = combined_salary + combo_2001_short[k,]$salary
       combined_AB = combined_AB + combo_2001_short[k,]$AB
       combined_OBP = combined_OBP + combo_2001_short[k,]$OBP
       
-      if ((combined_salary <= desired_salary) & (combined_OBP >= desired_totalOBP) & (combined_AB >= desired_totalAB)) {
+      if ((combined_salary <= 20000000) & (combined_OBP >= 0.7) & (combined_AB >= 800)) {
         print(combo_2001_short[c(i,j,k),])
       }
       
@@ -135,4 +134,7 @@ for (i in 1 : (num_players - 2)) {
     }
   }
 }
+
+# combn(1:643,3)
+
 
