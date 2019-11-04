@@ -92,7 +92,7 @@ combo_2001_revised_sorted[,c('playerID', 'AB','salary','OBP')]
 combo_2001_short <- combo_2001[,c('playerID', 'salary', 'AB', 'OBP')]
 combo_2001_short <- subset(combo_2001_short, OBP > 0)
 #num_players <- dim(combo_2001_short)[1]
-num_players <- 11
+num_players = 300
 
 combined_salary = 0
 combined_AB = 0
@@ -102,12 +102,30 @@ desired_salary = 15000000
 desired_totalAB = sum(lost_players$AB)
 desired_totalOBP = sum(lost_players$OBP)
 
-for (i in 1 : (num_players - 2)) {
 
+###
+
+combination <- combn(1:20,3)
+
+for(a in 1:dim(combination)[2]) {
+  
+  if ((sum(combo_2001_short[combination[,a],]$salary) <= 15000000) & (sum(combo_2001_short[combination[,a],]$AB) >= 1469) & (sum(combo_2001_short[combination[,a],]$OBP) >= 1.0916)) {
+    
+    print(combo_2001_short[combination[,a],])
+    
+  }
+  
+}
+
+###
+
+
+
+for (i in 1 : (num_players - 2)) {
+  i = 1
   combined_salary = combined_salary + combo_2001_short[i,]$salary
   combined_AB = combined_AB + combo_2001_short[i,]$AB
   combined_OBP = combined_OBP + combo_2001_short[i,]$OBP
-
   
   
   for (j in (i + 1) : (num_players - 1)) {
@@ -119,11 +137,21 @@ for (i in 1 : (num_players - 2)) {
     
     for (k in (j + 1) : num_players) {
 
+      i = 4
+      combined_salary = combined_salary + combo_2001_short[i,]$salary
+      combined_AB = combined_AB + combo_2001_short[i,]$AB
+      combined_OBP = combined_OBP + combo_2001_short[i,]$OBP
+      
+      j = 12
+      combined_salary = combined_salary + combo_2001_short[j,]$salary
+      combined_AB = combined_AB + combo_2001_short[j,]$AB
+      combined_OBP = combined_OBP + combo_2001_short[j,]$OBP
+      
       combined_salary = combined_salary + combo_2001_short[k,]$salary
       combined_AB = combined_AB + combo_2001_short[k,]$AB
       combined_OBP = combined_OBP + combo_2001_short[k,]$OBP
       
-      if ((combined_salary <= 20000000) & (combined_OBP >= 0.7) & (combined_AB >= 800)) {
+      if ((combined_salary <= desired_salary) & (combined_OBP >= desired_totalOBP) & (combined_AB >= desired_totalAB)) {
         print(combo_2001_short[c(i,j,k),])
       }
       
@@ -134,7 +162,4 @@ for (i in 1 : (num_players - 2)) {
     }
   }
 }
-
-# combn(1:643,3)
-
 
