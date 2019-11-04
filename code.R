@@ -109,7 +109,9 @@ combination <- combn(1:20,3)
 
 for(a in 1:dim(combination)[2]) {
   
-  if ((sum(combo_2001_short[combination[,a],]$salary) <= 15000000) & (sum(combo_2001_short[combination[,a],]$AB) >= 1469) & (sum(combo_2001_short[combination[,a],]$OBP) >= 1.0916)) {
+  if ((sum(combo_2001_short[combination[,a],]$salary) <= 15000000) 
+      & (sum(combo_2001_short[combination[,a],]$AB) >= 1469) 
+      & (sum(combo_2001_short[combination[,a],]$OBP) >= 1.0916)) {
     
     print(combo_2001_short[combination[,a],])
     
