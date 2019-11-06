@@ -137,10 +137,14 @@ print(scout.list)
 
 
 scout.list_OBP_sorted <- arrange(scout.list, desc(Total_OBP))
+write.csv(scout.list_OBP_sorted,"/Users/ml4274/Downloads/scout.list_OBP_sorted.csv", row.names = FALSE)
 
 scout.list_AB_sorted <- arrange(scout.list, desc(Total_AB))
+write.csv(scout.list_AB_sorted,"/Users/ml4274/Downloads/scout.list_AB_sorted.csv", row.names = FALSE)
 
 scout.list_salary_sorted <- arrange(scout.list, Total_Salary)
+write.csv(scout.list_salary_sorted,"/Users/ml4274/Downloads/scout.list_salary_sorted.csv", row.names = FALSE)
+
 
 
 
