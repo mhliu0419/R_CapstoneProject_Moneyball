@@ -86,8 +86,6 @@ combo_2001_revised_sorted <- arrange(combo_2001_revised, desc(OBP))
 combo_2001_revised_sorted[,c('playerID', 'AB','salary','OBP')]
 
 #############
-# In a new method, I am gonna use three for loops to dynamically select three players one by one from 643 candidates
-
 
 combo_2001_short <- combo_2001[,c('playerID', 'salary', 'AB', 'OBP')]
 combo_2001_short <- subset(combo_2001_short, OBP > 0.3)
@@ -102,6 +100,53 @@ combined_OBP = 0
 desired_salary = 15000000
 desired_totalAB = sum(lost_players$AB)
 desired_totalOBP = sum(lost_players$OBP)
+
+###
+
+combination <- combn(1:num_players,3)
+
+scout.list <- data.frame(playerID.1 = numeric(), 
+                             playerID.2 = numeric(),
+                             playerID.3 = numeric(),
+                             Total_Salary = integer(),
+                             Total_AB = integer(),
+                             Total_OBP = double())
+
+
+for(a in 1:dim(combination)[2]) {
+  
+  if ((sum(combo_2001_short[combination[,a],]$salary) <= desired_salary) 
+      & (sum(combo_2001_short[combination[,a],]$AB) >= desired_totalAB) 
+      & (sum(combo_2001_short[combination[,a],]$OBP) >= desired_totalOBP)) {
+
+
+    scout.list <- data.frame(playerID.1 = combo_2001_short[combination[,a],]$playerID[1],
+                                    playerID.2 = combo_2001_short[combination[,a],]$playerID[2],
+                                    playerID.3 = combo_2001_short[combination[,a],]$playerID[3],
+                                    Total_Salary = sum(combo_2001_short[combination[,a],]$salary[1], combo_2001_short[combination[,a],]$salary[2], combo_2001_short[combination[,a],]$salary[3]),
+                                    Total_AB = sum(combo_2001_short[combination[,a],]$AB[1], combo_2001_short[combination[,a],]$AB[2], combo_2001_short[combination[,a],]$AB[3]),
+                                    Total_OBP = sum(combo_2001_short[combination[,a],]$OBP[1], combo_2001_short[combination[,a],]$OBP[2], combo_2001_short[combination[,a],]$OBP[3]))
+    print(current.selection)
+    scout.list <- rbind(scout.list,current.selection)
+
+  }
+  
+}
+
+print(scout.list)
+
+
+rencaichubeiku_OBP_sorted <- arrange(scout.list, desc(Total_OBP))
+rencaichubeiku_AB_sorted <- arrange(scout.list, desc(Total_AB))
+rencaichubeiku_salary_sorted <- arrange(scout.list, Total_Salary)
+
+
+
+############################################################################################################
+############################################################################################################
+############################################################################################################
+# In a new method, I am gonna use three for loops to dynamically select three players one by one from 643 candidates
+
 
 for (i in 1 : (num_players - 2)) {
   i = 1
@@ -144,46 +189,5 @@ for (i in 1 : (num_players - 2)) {
     }
   }
 }
-
-
-
-###
-
-combination <- combn(1:num_players,3)
-
-rencaichubeiku <- data.frame(playerID.1 = numeric(), 
-                             playerID.2 = numeric(),
-                             playerID.3 = numeric(),
-                             Total_Salary = integer(),
-                             Total_AB = integer(),
-                             Total_OBP = double())
-
-
-for(a in 1:dim(combination)[2]) {
-  
-  if ((sum(combo_2001_short[combination[,a],]$salary) <= desired_salary) 
-      & (sum(combo_2001_short[combination[,a],]$AB) >= desired_totalAB) 
-      & (sum(combo_2001_short[combination[,a],]$OBP) >= desired_totalOBP)) {
-
-
-    current.selection <- data.frame(playerID.1 = combo_2001_short[combination[,a],]$playerID[1],
-                                    playerID.2 = combo_2001_short[combination[,a],]$playerID[2],
-                                    playerID.3 = combo_2001_short[combination[,a],]$playerID[3],
-                                    Total_Salary = sum(combo_2001_short[combination[,a],]$salary[1], combo_2001_short[combination[,a],]$salary[2], combo_2001_short[combination[,a],]$salary[3]),
-                                    Total_AB = sum(combo_2001_short[combination[,a],]$AB[1], combo_2001_short[combination[,a],]$AB[2], combo_2001_short[combination[,a],]$AB[3]),
-                                    Total_OBP = sum(combo_2001_short[combination[,a],]$OBP[1], combo_2001_short[combination[,a],]$OBP[2], combo_2001_short[combination[,a],]$OBP[3]))
-    print(current.selection)
-    rencaichubeiku <- rbind(rencaichubeiku,current.selection)
-
-  }
-  
-}
-
-print(rencaichubeiku)
-
-
-rencaichubeiku_OBP_sorted <- arrange(rencaichubeiku, desc(Total_OBP))
-rencaichubeiku_AB_sorted <- arrange(rencaichubeiku, desc(Total_AB))
-rencaichubeiku_salary_sorted <- arrange(rencaichubeiku, Total_Salary)
 
 
