@@ -90,7 +90,8 @@ combo_2001_revised_sorted[,c('playerID', 'AB','salary','OBP')]
 
 
 combo_2001_short <- combo_2001[,c('playerID', 'salary', 'AB', 'OBP')]
-combo_2001_short <- subset(combo_2001_short, OBP > 0)
+combo_2001_short <- subset(combo_2001_short, OBP > 0.3)
+combo_2001_short <- subset(combo_2001_short, AB > 300)
 num_players <- dim(combo_2001_short)[1]
 #num_players = 300
 
@@ -171,7 +172,7 @@ for(a in 1:dim(combination)[2]) {
                                     Total_Salary = sum(combo_2001_short[combination[,a],]$salary[1], combo_2001_short[combination[,a],]$salary[2], combo_2001_short[combination[,a],]$salary[3]),
                                     Total_AB = sum(combo_2001_short[combination[,a],]$AB[1], combo_2001_short[combination[,a],]$AB[2], combo_2001_short[combination[,a],]$AB[3]),
                                     Total_OBP = sum(combo_2001_short[combination[,a],]$OBP[1], combo_2001_short[combination[,a],]$OBP[2], combo_2001_short[combination[,a],]$OBP[3]))
-    
+    print(current.selection)
     rencaichubeiku <- rbind(rencaichubeiku,current.selection)
 
   }
@@ -181,8 +182,8 @@ for(a in 1:dim(combination)[2]) {
 print(rencaichubeiku)
 
 
-arrange(rencaichubeiku, desc(Total_OBP))
-arrange(rencaichubeiku, desc(Total_AB))
-arrange(rencaichubeiku, Total_Salary)
+rencaichubeiku_OBP_sorted <- arrange(rencaichubeiku, desc(Total_OBP))
+rencaichubeiku_AB_sorted <- arrange(rencaichubeiku, desc(Total_AB))
+rencaichubeiku_salary_sorted <- arrange(rencaichubeiku, Total_Salary)
 
 
