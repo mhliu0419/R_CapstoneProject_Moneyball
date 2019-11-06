@@ -4,7 +4,7 @@ library(ggplot2)
 
 # Load the data for all players performance statistics
 
-batting <- read.csv('/Users/AncelotLiu/Desktop/R-Course-HTML-Notes/R-for-Data-Science-and-Machine-Learning/Training\ Exercises/Capstone\ and\ Data\ Viz\ Projects/Capstone\ Project/Batting.csv')
+batting <- read.csv('/Users/ml4274/Downloads/R_CapstoneProject_Moneyball-master/Batting.csv')
 
 # To show the data of batting
 
@@ -36,7 +36,7 @@ str(batting)
 # Load the data of player salary
 
 
-sal <- read.csv('/Users/AncelotLiu/Desktop/R-Course-HTML-Notes/R-for-Data-Science-and-Machine-Learning/Training\ Exercises/Capstone\ and\ Data\ Viz\ Projects/Capstone\ Project/Salaries.csv')
+sal <- read.csv('/Users/ml4274/Downloads/R_CapstoneProject_Moneyball-master/Salaries.csv')
 
 summary(sal)
 
@@ -91,8 +91,8 @@ combo_2001_revised_sorted[,c('playerID', 'AB','salary','OBP')]
 
 combo_2001_short <- combo_2001[,c('playerID', 'salary', 'AB', 'OBP')]
 combo_2001_short <- subset(combo_2001_short, OBP > 0)
-#num_players <- dim(combo_2001_short)[1]
-num_players = 300
+num_players <- dim(combo_2001_short)[1]
+#num_players = 300
 
 combined_salary = 0
 combined_AB = 0
@@ -148,68 +148,41 @@ for (i in 1 : (num_players - 2)) {
 
 ###
 
-combination <- combn(1:20,3)
+combination <- combn(1:num_players,3)
 
 rencaichubeiku <- data.frame(playerID.1 = numeric(), 
                              playerID.2 = numeric(),
-                             playerID.3 = numeric())
-#,
-#                             Total.Salary = numeric(),
-#                             Total.AB = numeric(),
-#                             Total.OBP = numeric())
+                             playerID.3 = numeric(),
+                             Total_Salary = integer(),
+                             Total_AB = integer(),
+                             Total_OBP = double())
+
 
 for(a in 1:dim(combination)[2]) {
   
-  if ((sum(combo_2001_short[combination[,a],]$salary) <= 15000000) 
-      & (sum(combo_2001_short[combination[,a],]$AB) >= 1469) 
-      & (sum(combo_2001_short[combination[,a],]$OBP) >= 1.0916)) {
-    
-    print(combo_2001_short[combination[,a],])
-
-# Need revision
-    
-#    current.selection <- data.frame(playerID.1 = combo_2001_short[combination[,a],]$playerID[1],
-#                                    playerID.2 = combo_2001_short[combination[,a],]$playerID[2],
-#                                    playerID.3 = combo_2001_short[combination[,a],]$playerID[3])
-    
-#    rencaichubeiku <- rbind(rencaichubeiku,current.selection)
-#    print(rencaichubeiku)
-  }
-  
-}
-
-###
+  if ((sum(combo_2001_short[combination[,a],]$salary) <= desired_salary) 
+      & (sum(combo_2001_short[combination[,a],]$AB) >= desired_totalAB) 
+      & (sum(combo_2001_short[combination[,a],]$OBP) >= desired_totalOBP)) {
 
 
-###
-### Testing
-###
-
-for(a in 1:dim(combination)[2]) {
-  
-  if ((sum(combo_2001_short[combination[,a],]$salary) <= 15000000) 
-      & (sum(combo_2001_short[combination[,a],]$AB) >= 1469) 
-      & (sum(combo_2001_short[combination[,a],]$OBP) >= 1.0916)) {
+    current.selection <- data.frame(playerID.1 = combo_2001_short[combination[,a],]$playerID[1],
+                                    playerID.2 = combo_2001_short[combination[,a],]$playerID[2],
+                                    playerID.3 = combo_2001_short[combination[,a],]$playerID[3],
+                                    Total_Salary = sum(combo_2001_short[combination[,a],]$salary[1], combo_2001_short[combination[,a],]$salary[2], combo_2001_short[combination[,a],]$salary[3]),
+                                    Total_AB = sum(combo_2001_short[combination[,a],]$AB[1], combo_2001_short[combination[,a],]$AB[2], combo_2001_short[combination[,a],]$AB[3]),
+                                    Total_OBP = sum(combo_2001_short[combination[,a],]$OBP[1], combo_2001_short[combination[,a],]$OBP[2], combo_2001_short[combination[,a],]$OBP[3]))
     
-    print(combo_2001_short[combination[,a],]$playerID[1])
-    print(combo_2001_short[combination[,a],]$playerID[2])
-    print(combo_2001_short[combination[,a],]$playerID[3])
-    
+    rencaichubeiku <- rbind(rencaichubeiku,current.selection)
 
   }
   
 }
 
+print(rencaichubeiku)
 
-a1<-data.frame(playerID.1 = combo_2001_short[combination[,1],]$playerID[1],
-           playerID.2 = combo_2001_short[combination[,1],]$playerID[2],
-           playerID.3 = combo_2001_short[combination[,1],]$playerID[3])
-a2<-data.frame(playerID.1 = combo_2001_short[combination[,2],]$playerID[1],
-               playerID.2 = combo_2001_short[combination[,2],]$playerID[2],
-               playerID.3 = combo_2001_short[combination[,2],]$playerID[3])
-a3<-data.frame(playerID.1 = combo_2001_short[combination[,3],]$playerID[1],
-               playerID.2 = combo_2001_short[combination[,3],]$playerID[2],
-               playerID.3 = combo_2001_short[combination[,3],]$playerID[3])
 
-ar<-rbind(a1,a2,a3)
+arrange(rencaichubeiku, desc(Total_OBP))
+arrange(rencaichubeiku, desc(Total_AB))
+arrange(rencaichubeiku, Total_Salary)
+
 
