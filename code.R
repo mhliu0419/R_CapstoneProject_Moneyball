@@ -88,8 +88,8 @@ combo_2001_revised_sorted[,c('playerID', 'AB','salary','OBP')]
 #############
 
 combo_2001_short <- combo_2001[,c('playerID', 'salary', 'AB', 'OBP')]
-combo_2001_short <- subset(combo_2001_short, OBP > 0.3)
-combo_2001_short <- subset(combo_2001_short, AB > 300)
+#combo_2001_short <- subset(combo_2001_short, OBP > 0.3)
+#combo_2001_short <- subset(combo_2001_short, AB > 300)
 num_players <- dim(combo_2001_short)[1]
 #num_players = 300
 
@@ -120,7 +120,7 @@ for(a in 1:dim(combination)[2]) {
       & (sum(combo_2001_short[combination[,a],]$OBP) >= desired_totalOBP)) {
 
 
-    scout.list <- data.frame(playerID.1 = combo_2001_short[combination[,a],]$playerID[1],
+    current.selection <- data.frame(playerID.1 = combo_2001_short[combination[,a],]$playerID[1],
                                     playerID.2 = combo_2001_short[combination[,a],]$playerID[2],
                                     playerID.3 = combo_2001_short[combination[,a],]$playerID[3],
                                     Total_Salary = sum(combo_2001_short[combination[,a],]$salary[1], combo_2001_short[combination[,a],]$salary[2], combo_2001_short[combination[,a],]$salary[3]),
@@ -136,9 +136,11 @@ for(a in 1:dim(combination)[2]) {
 print(scout.list)
 
 
-rencaichubeiku_OBP_sorted <- arrange(scout.list, desc(Total_OBP))
-rencaichubeiku_AB_sorted <- arrange(scout.list, desc(Total_AB))
-rencaichubeiku_salary_sorted <- arrange(scout.list, Total_Salary)
+scout.list_OBP_sorted <- arrange(scout.list, desc(Total_OBP))
+
+scout.list_AB_sorted <- arrange(scout.list, desc(Total_AB))
+
+scout.list_salary_sorted <- arrange(scout.list, Total_Salary)
 
 
 
