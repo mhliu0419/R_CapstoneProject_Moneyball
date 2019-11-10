@@ -73,10 +73,15 @@ lost_players
 # Their mean OBP had to equal to or greater than the mean OBP of the lost players
 
 
+# To show player data in 2001 only
+
 combo_2001 <- subset(combo, yearID == 2001)
 
 ggplot(combo_2001, aes(x=OBP, y=salary)) + geom_point(size=2)
 
+
+# To eliminate some players who seem definitely will not be included
+# For example, salary cannot exceed 8000000, OBP must exceed 0, and AB must over 450
 
 combo_2001_revised <- subset(combo_2001, salary < 8000000 & OBP > 0 & AB > 450)
 
@@ -90,6 +95,8 @@ combo_2001_revised_sorted[,c('playerID', 'AB','salary','OBP')]
 combo_2001_short <- combo_2001[,c('playerID', 'salary', 'AB', 'OBP')]
 #combo_2001_short <- subset(combo_2001_short, OBP > 0.3)
 #combo_2001_short <- subset(combo_2001_short, AB > 300)
+
+
 num_players <- dim(combo_2001_short)[1]
 #num_players = 300
 
